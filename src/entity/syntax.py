@@ -89,6 +89,7 @@ class Syntax:
         return follow_elem_set
 
     def rules_info(self):
+        """打印该语法包含的规则"""
         res = ""
         for rule in self.rule_set.values():
             res += (str(rule) + "\n")

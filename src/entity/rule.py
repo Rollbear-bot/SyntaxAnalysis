@@ -7,6 +7,7 @@ from entity.tokens import NonTerminalToken
 
 
 class RuleStmt:
+    """规则语句的基类"""
     def __init__(self, tokens):
         self.tokens = tokens
 
@@ -14,6 +15,7 @@ class RuleStmt:
         pass
 
     def __getitem__(self, item):
+        """重写下标函数"""
         return self.tokens[item]
 
 

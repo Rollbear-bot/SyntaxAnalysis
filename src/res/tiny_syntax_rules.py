@@ -6,6 +6,7 @@
 from entity.rule import *
 from entity.tokens import *
 
+# Tiny语言的基础语法规则
 TINY_SYNTAX_RULES = [
     Rule(
         StartToken("program"),
