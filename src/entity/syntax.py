@@ -104,12 +104,12 @@ class Syntax:
                         if f in table_row:
                             print("Error: multiple stmt link to a first element!",
                                   str(table_row[f]), str(branch))
-                        table_row[f] = branch
+                        table_row[f.token_content] = branch
             else:
                 for f in self.first[token]:
-                    table_row[f] = post
+                    table_row[f.token_content] = post
 
-            self.ll_1_table[token] = table_row
+            self.ll_1_table[token.token_content] = table_row
 
     def rules_info(self):
         """打印该语法包含的规则"""
