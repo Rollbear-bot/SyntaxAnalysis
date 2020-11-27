@@ -5,6 +5,7 @@
 
 from entity.syntax import Syntax
 from res.tiny_syntax_rules import TINY_SYNTAX_RULES
+from res.extent_tiny_syntax_rules import EXTENT_TINY_SYNTAX_RULES
 
 # Tiny语言上下文无关文法
 TINY_SYNTAX = Syntax(rules=TINY_SYNTAX_RULES)
