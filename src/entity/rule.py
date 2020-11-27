@@ -7,13 +7,20 @@ from entity.tokens import NonTerminalToken
 
 
 class RuleStmt:
+    def __init__(self, tokens):
+        self.tokens = tokens
+
     def __str__(self):
         pass
+
+    def __getitem__(self, item):
+        return self.tokens[item]
 
 
 class BranchStmt(RuleStmt):
     """分支|"""
     def __init__(self, branches: iter):
+        super().__init__(tokens=None)
         self.branches = branches
 
     def __str__(self):
@@ -23,7 +30,7 @@ class BranchStmt(RuleStmt):
 class BooleanStmt(RuleStmt):
     """出现0或1次[]"""
     def __init__(self, tokens):
-        self.tokens = tokens
+        super().__init__(tokens)
 
     def __str__(self):
         return f"[{' '.join([str(elem) for elem in self.tokens])}]"
@@ -32,7 +39,7 @@ class BooleanStmt(RuleStmt):
 class RepeatStmt(RuleStmt):
     """出现一次或多次{}"""
     def __init__(self, tokens):
-        self.tokens = tokens
+        super().__init__(tokens)
 
     def __str__(self):
         return "{" + " ".join([str(elem) for elem in self.tokens]) + "}"
@@ -41,13 +48,16 @@ class RepeatStmt(RuleStmt):
 class SeqStmt(RuleStmt):
     """顺序出现"""
     def __init__(self, tokens):
-        self.tokens = tokens
+        super().__init__(tokens)
 
     def __str__(self):
         return " ".join([str(elem) for elem in self.tokens])
 
     def __iter__(self):
         return iter(self.tokens)
+
+    def __getitem__(self, item):
+        return self.tokens[item]
 
 
 class Rule:

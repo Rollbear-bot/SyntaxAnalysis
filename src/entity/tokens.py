@@ -5,18 +5,18 @@
 
 class TerminalToken:
     def __init__(self, token):
-        self.token = token
+        self.token_content = token
 
     def __str__(self):
-        return str(self.token)
+        return str(self.token_content)
 
 
 class NonTerminalToken:
     def __init__(self, token):
-        self.token = token
+        self.token_content = token
 
     def __str__(self):
-        return str(self.token)
+        return str(self.token_content)
 
 
 class StartToken(NonTerminalToken):
