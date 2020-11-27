@@ -16,6 +16,9 @@ class TestAnalysis(unittest.TestCase):
     def test_parser(self):
         analyzer = Analyzer(TINY_SYNTAX)
 
+    def test_ll_1_table(self):
+        TINY_SYNTAX.print_ll_1_table_info()
+
 
 if __name__ == '__main__':
     unittest.main()

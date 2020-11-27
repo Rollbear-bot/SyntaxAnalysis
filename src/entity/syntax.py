@@ -15,9 +15,11 @@ class Syntax:
         self.start_token = [token for token in self.non_terminal_set if isinstance(token, StartToken)]
 
         self.first = {}  # first元素集合
+        self.ll_1_table = {}  # LL1分析表
+
         self.build_first()
+        self.build_ll_1_table()
         # self.follow = self.build_follow()  # follow元素集合
-        self.ll_1_table = None  # LL1分析表
 
     def build_first(self):
         """构建first集合"""
@@ -32,9 +34,9 @@ class Syntax:
         """
         first_elem_set = set()
 
+        # 当前规则段就是单个符号（终结符/非终结符）的情况
         if isinstance(stmt, TerminalToken):
             first_elem_set.add(stmt)
-
         elif isinstance(stmt, NonTerminalToken):
             first_elem_set.update(self.get_first_single_token(stmt))
 
@@ -88,6 +90,27 @@ class Syntax:
         # todo::得到单个非终结符的follow集合
         return follow_elem_set
 
+    def build_ll_1_table(self):
+        """建立LL1分析表"""
+        for token in self.non_terminal_set:
+            table_row = {}
+            post = self.rule_set[token.token_content].post
+
+            # 多路分支规则另外处理，需要关联每个分支的first与执行的子规则
+            if isinstance(post[0], BranchStmt):
+                for branch in post[0].branches:
+                    f_set = self.get_first_single_stmt(branch)
+                    for f in f_set:
+                        if f in table_row:
+                            print("Error: multiple stmt link to a first element!",
+                                  str(table_row[f]), str(branch))
+                        table_row[f] = branch
+            else:
+                for f in self.first[token]:
+                    table_row[f] = post
+
+            self.ll_1_table[token] = table_row
+
     def rules_info(self):
         """打印该语法包含的规则"""
         res = ""
@@ -95,4 +118,12 @@ class Syntax:
             res += (str(rule) + "\n")
         return res
 
-
+    def print_ll_1_table_info(self):
+        """打印LL1分析表"""
+        json_like = {}
+        for key, row in self.ll_1_table.items():
+            r = {str(k): str(v) for k, v in row.items()}
+            json_like[str(key)] = r
+        print("="*20 + "LL1" + "="*20)
+        for forward, rule_table in json_like.items():
+            print(f"\n{forward}\n" + "\n".join([f"{f}: {rule}" for f, rule in rule_table.items()]))
