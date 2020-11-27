@@ -7,6 +7,7 @@ import unittest
 
 from res.tiny_syntax import TINY_SYNTAX
 from entity.analyzer import Analyzer
+from entity.tokenizer import *
 
 
 class TestAnalysis(unittest.TestCase):
@@ -14,10 +15,19 @@ class TestAnalysis(unittest.TestCase):
         print(TINY_SYNTAX.rules_info())
 
     def test_parser(self):
-        analyzer = Analyzer(TINY_SYNTAX)
+        analyzer = Analyzer(TINY_SYNTAX, tokenizer_demo)
+        print()
+        while 1:
+            cur = analyzer._get_token()
+            print(cur)
+            if cur == "EOF":
+                break
 
     def test_ll_1_table(self):
         TINY_SYNTAX.print_ll_1_table_info()
+
+    def test_doc_via_course(self):
+        pass
 
 
 if __name__ == '__main__':
