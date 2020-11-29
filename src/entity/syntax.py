@@ -9,7 +9,7 @@ from entity.rule import *
 
 class Syntax:
     """文法"""
-    def __init__(self, rules):
+    def __init__(self, rules, follow_set_load=None):
         self.rule_set = {rule.forward.token_content: rule for rule in rules}
         self.non_terminal_set = [rule.forward for rule in self.rule_set.values()]
         self.start_token = [token for token in self.non_terminal_set if isinstance(token, StartToken)]
@@ -19,6 +19,7 @@ class Syntax:
 
         self.build_first()
         self.build_ll_1_table()
+        self.follow = follow_set_load
         # self.follow = self.build_follow()  # follow元素集合
 
     def build_first(self):
@@ -127,3 +128,6 @@ class Syntax:
         print("="*20 + "LL1" + "="*20)
         for forward, rule_table in json_like.items():
             print(f"\n{forward}\n" + "\n".join([f"{f}: {rule}" for f, rule in rule_table.items()]))
+
+    def get_stmt_by_token(self, token: NonTerminalToken):
+        return self.rule_set[token.token_content]
