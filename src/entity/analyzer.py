@@ -85,7 +85,8 @@ class Analyzer:
                     next_stmt = self.syntax.ll_1_table[cur_node.data.token_content][self._cur_word]
                     self._analyze_recursion(cur_node=cur_node.build_child(next_stmt))
                 except KeyError:
-                    print(f"Error in branch finding! cur_word: {self._cur_word}; cur stmt: {str(cur_node.data)}")
+                    print(f"Error in branch finding! "
+                          f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\"")
                     raise BranchMatchException
 
             # 是选择出现语句时
@@ -102,7 +103,7 @@ class Analyzer:
             elif isinstance(token, RepeatStmt):
                 # todo::需要求follow集合，follow元素出现时表示循环出现语句结束
                 # 循环直到语句段末尾token的follow出现
-                while self._cur_word != self.syntax.follow[token.tokens[-1].token_content]:
+                while self._cur_word not in self.syntax.follow[token.tokens[-1].token_content]:
                     # 循环内按照顺序语句匹配
                     for t in token.tokens:
                         self._analyze_recursion(cur_node.build_child(t))
