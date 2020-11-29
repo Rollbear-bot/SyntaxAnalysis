@@ -17,6 +17,9 @@ class TerminalToken(Token):
     def __init__(self, token_c):
         super().__init__(token_c)
 
+    def match(self, token):
+        return token == self.token_content
+
 
 class NonTerminalToken(Token):
     """非终结符"""
