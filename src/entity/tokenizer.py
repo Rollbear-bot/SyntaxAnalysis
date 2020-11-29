@@ -36,12 +36,36 @@ demo2 = [
     "identifier", ":=", "number", ";",
     "repeat",
     "identifier", ":=", "identifier", "*", "identifier", ";",
-    "identifier", ":=", "identifier", "-", "number",
+    "identifier", ":=", "identifier", "-", "number", ";",
     "until", "identifier", "=", "number", ";",
+    "write", "identifier", ";",
+    "EOF"
+]
+
+demo3 = [
+    "read", "x", ";",
+    "if", "(", "0", "<", "x", ")",
+    "fact", ":=", "1", ";",
+    "while", "(", "x", ">", "0", ")",
+    "fact", ":=", "fact", "*", "x", ";",
+    "x", ":=", "x", "-", "1",
+    "endwhile",
+    "write", "fact", ";",
+    "EOF"
+]
+
+demo4 = [
+    "read", "identifier", ";",
+    "if", "(", "number", "<", "identifier", ")",
+    "identifier", ":=", "number", ";",
+    "while", "(", "identifier", ">", "number", ")",
+    "identifier", ":=", "identifier", "*", "identifier", ";",
+    "identifier", ":=", "identifier", "-", "number", ";",
+    "endwhile", ";",
     "write", "identifier", ";",
     "EOF"
 ]
 
 # todo::only for tokenizer TEST
 tokenizer_demo = Tokenizer("")
-tokenizer_demo.tokens = demo2
+tokenizer_demo.tokens = demo4

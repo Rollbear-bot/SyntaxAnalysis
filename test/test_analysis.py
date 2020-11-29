@@ -12,19 +12,17 @@ from entity.tokenizer import *
 
 class TestAnalysis(unittest.TestCase):
     def test_hello_world(self):
-        print(TINY_SYNTAX.rules_info())
+        info = TINY_SYNTAX.rules_info()
+        print(info)
 
     def test_parser(self):
         analyzer = Analyzer(TINY_SYNTAX, tokenizer_demo)
         print()
-        while 1:
-            cur = analyzer._get_token()
-            print(cur)
-            if cur == "EOF":
-                break
+        analyzer.analyze()
 
     def test_ll_1_table(self):
         TINY_SYNTAX.print_ll_1_table_info()
+        pass
 
     def test_doc_via_course(self):
         pass
