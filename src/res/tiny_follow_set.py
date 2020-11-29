@@ -29,9 +29,9 @@ from entity.rule import *
 end_of_stmt = {"EOF", "until", "enddo", "else", "endwhile", "while"}
 
 TINY_FOLLOW = {
-    "; statement": end_of_stmt,
+    "statement ;": {"EOF", "until", "enddo", "else", "endwhile"},
     "comparison-op simple-exp": {";", "EOF", ")"} | end_of_stmt,
-    "addop term": {";", "EOF", ")", "<", "="} | end_of_stmt,
-    "mulop factor": {";", "EOF", ")", "<", "=", "+", "-"} | end_of_stmt,
-    "else stmt-sequence": {"EOF"}
+    "addop term": {";", "EOF", ")", "<", "=", ">"} | end_of_stmt,
+    "mulop factor": {";", "EOF", ")", "<", "=", ">", "+", "-"} | end_of_stmt,
+    "else stmt-sequence": end_of_stmt
 }

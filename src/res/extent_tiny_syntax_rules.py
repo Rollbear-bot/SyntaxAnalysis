@@ -13,8 +13,13 @@ EXTENT_TINY_SYNTAX_RULES = [
         [NonTerminalToken("stmt-sequence")]),
     Rule(
         NonTerminalToken("stmt-sequence"),
-        [NonTerminalToken("statement"),
-         RepeatStmt([TerminalToken(";"), NonTerminalToken("statement")])]),
+        [
+            RepeatStmt([
+                NonTerminalToken("statement"),
+                TerminalToken(";")
+            ])
+        ]
+    ),
     Rule(
         NonTerminalToken("statement"),
         [BranchStmt([
@@ -22,7 +27,10 @@ EXTENT_TINY_SYNTAX_RULES = [
             NonTerminalToken("repeat-stmt"),
             NonTerminalToken("assign-stmt"),
             NonTerminalToken("read-stmt"),
-            NonTerminalToken("write-stmt")
+            NonTerminalToken("write-stmt"),
+            NonTerminalToken("While-stmt"),
+            NonTerminalToken("Dowhile-stmt"),
+            NonTerminalToken("for-stmt")
         ])]),
     Rule(
         NonTerminalToken("repeat-stmt"),
@@ -67,7 +75,7 @@ EXTENT_TINY_SYNTAX_RULES = [
     ),
     Rule(
         NonTerminalToken("comparison-op"),
-        [BranchStmt([TerminalToken("<"), TerminalToken("=")])]
+        [BranchStmt([TerminalToken("<"), TerminalToken("="), TerminalToken(">")])]
     ),
     Rule(
         NonTerminalToken("simple-exp"),
