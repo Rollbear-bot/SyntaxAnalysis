@@ -74,7 +74,8 @@ class Syntax:
 
         # 没求过，则进入该非终结符对应的后件语句中求first集合
         post = self.rule_set[token.token_content].post
-        if not isinstance(post[0], BranchStmt) and post[0].token_content == token.token_content:
+        if not (isinstance(post[0], BranchStmt) or isinstance(post[0], RepeatStmt)) and \
+                post[0].token_content == token.token_content:
             print("Error: recursion non-terminal-token!")
         return self.get_first_single_stmt(post)
 
