@@ -17,17 +17,31 @@ class Tokenizer:
         return self.tokens[self.index]
 
 
-# todo::only for tokenizer TEST
-tokenizer_demo = Tokenizer("")
-tokenizer_demo.tokens = [
+demo1 = [
     "read", "x", ";",
     "if", "0", "<", "x", "then",
     "fact", ":=", "1", ";",
     "repeat",
     "fact", ":=", "fact", "*", "x", ";",
-    "x", ":=", "x", "-", "1", ";",
+    "x", ":=", "x", "-", "1",
     "until", "x", "=", "0", ";",
     "write", "fact", ";",
     "end",
     "EOF"
 ]
+
+demo2 = [
+    "read", "identifier", ";",
+    "if", "(", "number", "<", "identifier", ")",
+    "identifier", ":=", "number", ";",
+    "repeat",
+    "identifier", ":=", "identifier", "*", "identifier", ";",
+    "identifier", ":=", "identifier", "-", "number",
+    "until", "identifier", "=", "number", ";",
+    "write", "identifier", ";",
+    "EOF"
+]
+
+# todo::only for tokenizer TEST
+tokenizer_demo = Tokenizer("")
+tokenizer_demo.tokens = demo2

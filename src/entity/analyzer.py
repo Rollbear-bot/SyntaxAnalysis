@@ -41,8 +41,11 @@ class Analyzer:
         root = TreeNode(cur_stmt)
 
         # 递归建立解析树
-        self._cur_word = self._get_token()
-        self._analyze_recursion(root)
+        try:
+            self._cur_word = self._get_token()
+            self._analyze_recursion(root)
+        except ReachEOF:
+            print("succeed!")
 
     def _analyze_recursion(self, cur_node):
         """
@@ -92,7 +95,7 @@ class Analyzer:
             # 是选择出现语句时
             elif isinstance(token, BooleanStmt):
                 # 如果当前单词已经是[]语句末尾的follow，则说明该语句段没有出现，直接匹配下一个语句段
-                if self._cur_word in self.syntax.follow[token.tokens[-1].token_content]:
+                if self._cur_word in self.syntax.follow[" ".join([str(e) for e in token.tokens])]:
                     continue
                 # 否则按照常规的顺序语句匹配
                 else:
@@ -103,7 +106,7 @@ class Analyzer:
             elif isinstance(token, RepeatStmt):
                 # todo::需要求follow集合，follow元素出现时表示循环出现语句结束
                 # 循环直到语句段末尾token的follow出现
-                while self._cur_word not in self.syntax.follow[token.tokens[-1].token_content]:
+                while self._cur_word not in self.syntax.follow[" ".join([str(e) for e in token.tokens])]:
                     # 循环内按照顺序语句匹配
                     for t in token.tokens:
                         self._analyze_recursion(cur_node.build_child(t))
