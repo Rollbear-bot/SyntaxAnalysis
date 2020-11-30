@@ -18,8 +18,8 @@ class TestAnalysis(unittest.TestCase):
     def test_parser(self):
         analyzer = Analyzer(TINY_SYNTAX, tokenizer_demo)
         print()
-        analyzer._analyze()
-        analyzer.print_syntax_tree()
+        # analyzer._analyze()
+        # analyzer.get_syntax_tree_str()
 
     def test_ll_1_table(self):
         TINY_SYNTAX.print_ll_1_table_info()
@@ -38,9 +38,23 @@ if (0<x)
   endwhile
   write fact; """
         tokenizer = Tokenizer(doc)
-        tokenizer._run()
         for t in tokenizer.tokens:
             print(t)
+
+    def test_print_tree(self):
+        doc = """
+          read x; 
+if (0<x) 
+  _fact := 1;
+  while(x_er>0)
+    fact := fact * x;
+    x := x - 132;
+  endwhile;
+  write fact; 
+          """
+        tokenizer = Tokenizer(doc)
+        a = Analyzer(syntax=TINY_SYNTAX, tokenizer=tokenizer)
+        print(a.get_syntax_tree_str())
 
 
 if __name__ == '__main__':

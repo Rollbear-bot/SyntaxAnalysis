@@ -118,15 +118,17 @@ class Analyzer:
 
         return  # 当前语句匹配完成后，回退到父节点（递归回溯）
 
-    def print_syntax_tree(self):
+    def get_syntax_tree_str(self):
         """打印语法树"""
-        print("="*10 + "Syntax Tree" + "="*10)
-        self._print_tree_recursion(self.tree_root, depth=0, indent_unit="-")
+        output = "="*10 + "Syntax Tree" + "="*10 + "\n"
+        output = self._get_tree_recursion(self.tree_root, depth=0, indent_unit="-", out=output)
+        return output
 
-    def _print_tree_recursion(self, cur_node: TreeNode, depth, indent_unit):
+    def _get_tree_recursion(self, cur_node: TreeNode, depth, indent_unit, out):
         """递归实现前序打印语法树"""
-        print(indent_unit * depth + str(cur_node.data))
+        out += indent_unit * depth + str(cur_node.data) + "\n"
 
         if len(cur_node.children) != 0:
             for child in cur_node.children:
-                self._print_tree_recursion(child, depth + 1, indent_unit)
+                out = self._get_tree_recursion(child, depth + 1, indent_unit, out)
+        return out
