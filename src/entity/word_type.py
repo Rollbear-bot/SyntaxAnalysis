@@ -35,3 +35,8 @@ class Operator(WordType):
 class Delimiter(WordType):
     def __init__(self, content):
         super().__init__(content)
+
+
+class EOF(WordType):
+    def __init__(self, content):
+        super().__init__(content)

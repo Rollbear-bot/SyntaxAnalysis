@@ -20,11 +20,13 @@ class Analyzer:
         self.tree_root = None
         self._cur_word = None
 
+        self._analyze()
+
     def _get_token(self):
         """获取下一个单词"""
         return self.tokenizer.__next__()
 
-    def analyze(self):
+    def _analyze(self):
         """
         解析文本语法，生成解析树
         1. 每遇到一个新的非终结符，开启一个子节点，节点指针移动到子节点上

@@ -18,7 +18,7 @@ class TestAnalysis(unittest.TestCase):
     def test_parser(self):
         analyzer = Analyzer(TINY_SYNTAX, tokenizer_demo)
         print()
-        analyzer.analyze()
+        analyzer._analyze()
         analyzer.print_syntax_tree()
 
     def test_ll_1_table(self):
@@ -38,7 +38,7 @@ if (0<x)
   endwhile
   write fact; """
         tokenizer = Tokenizer(doc)
-        tokenizer.run()
+        tokenizer._run()
         for t in tokenizer.tokens:
             print(t)
 

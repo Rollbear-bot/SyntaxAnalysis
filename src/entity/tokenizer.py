@@ -34,15 +34,29 @@ class Tokenizer:
         self.raw_string = doc
         self.index = -1
 
+        self._run()  # tokenize
+
+    @property
+    def string_tokens(self):
+        res = []
+        for obj in self.tokens:
+            if isinstance(obj, Number):
+                res.append("number")
+            elif isinstance(obj, Identifier):
+                res.append("identifier")
+            else:
+                res.append(obj.content)
+        return res
+
     def __iter__(self):
         return iter(self.tokens)
 
     def __next__(self):
         self.index += 1
-        return self.tokens[self.index]
+        return self.string_tokens[self.index]
 
     @staticmethod
-    def word_type_wrapper(state, buffer):
+    def word_type_wrapper(state: State, buffer: str):
         res_obj = None
         if state == State.IN_WORD:
             if buffer in reserved_words:
@@ -55,7 +69,7 @@ class Tokenizer:
             res_obj = Operator(buffer)
         return res_obj
 
-    def run(self):
+    def _run(self):
         state = -1
         buffer = ""
 
@@ -106,6 +120,8 @@ class Tokenizer:
                     self.tokens.append(self.word_type_wrapper(state, buffer))
                     buffer = ""
                 self.tokens.append(Delimiter(cur_char))
+
+        self.tokens.append(EOF("EOF"))  # append a 'EOF' at the end of doc
 
 
 demo1 = [
