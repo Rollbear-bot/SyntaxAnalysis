@@ -22,3 +22,7 @@ class TreeNode:
 
     def is_leaf(self):
         return len(self._children) == 0
+
+    @property
+    def children(self):
+        return self._children

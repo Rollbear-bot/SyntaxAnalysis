@@ -19,6 +19,7 @@ class TestAnalysis(unittest.TestCase):
         analyzer = Analyzer(TINY_SYNTAX, tokenizer_demo)
         print()
         analyzer.analyze()
+        analyzer.print_syntax_tree()
 
     def test_ll_1_table(self):
         TINY_SYNTAX.print_ll_1_table_info()

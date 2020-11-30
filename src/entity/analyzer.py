@@ -17,11 +17,8 @@ class Analyzer:
     def __init__(self, syntax: Syntax, tokenizer: Tokenizer):
         self.syntax = syntax
         self.tokenizer = tokenizer
+        self.tree_root = None
         self._cur_word = None
-
-    def analyze_single_sent(self, sentence):
-        """分析单个句子的文法结构"""
-        pass
 
     def _get_token(self):
         """获取下一个单词"""
@@ -38,12 +35,12 @@ class Analyzer:
         """
         # 从文法的开始符号开始匹配
         cur_stmt = self.syntax.start_token[0]
-        root = TreeNode(cur_stmt)
+        self.tree_root = TreeNode(cur_stmt)
 
         # 递归建立解析树
         try:
             self._cur_word = self._get_token()
-            self._analyze_recursion(root)
+            self._analyze_recursion(self.tree_root)
         except ReachEOF:
             print("succeed!")
 
@@ -112,3 +109,15 @@ class Analyzer:
                         self._analyze_recursion(cur_node.build_child(t))
 
         return  # 当前语句匹配完成后，回退到父节点（递归回溯）
+
+    def print_syntax_tree(self):
+        """打印语法树"""
+        self._print_tree_recursion(self.tree_root, depth=0, indent_unit="-")
+
+    def _print_tree_recursion(self, cur_node: TreeNode, depth, indent_unit):
+        """递归实现前序打印语法树"""
+        print(indent_unit * depth + str(cur_node.data))
+
+        if len(cur_node.children) != 0:
+            for child in cur_node.children:
+                self._print_tree_recursion(child, depth + 1, indent_unit)
