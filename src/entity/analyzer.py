@@ -77,7 +77,8 @@ class Analyzer:
                     if debug:
                         print(f"Error in terminal-token matching! "
                               f"expected: \"{token.token_content}\", got: \"{self._cur_word}\"")
-                    raise TerminalMatchException
+                    raise TerminalMatchException(
+                        info=f"expected: \"{token.token_content}\", got: \"{self._cur_word}\"")
 
                 self._cur_word = self._get_token()  # 获取解析文档的下一个单词
                 if self._cur_word == "EOF":
@@ -95,7 +96,9 @@ class Analyzer:
                     if debug:
                         print(f"Error in branch finding! "
                               f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\"")
-                    raise BranchMatchException
+                    raise BranchMatchException(
+                        info=f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\""
+                    )
 
             # 是选择出现语句时
             elif isinstance(token, BooleanStmt):

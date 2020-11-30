@@ -4,8 +4,11 @@
 # @Filename: exception.py
 
 class TerminalMatchException(Exception):
+    def __init__(self, info):
+        self.info = info
+
     def __str__(self):
-        return "TerminalMatchException"
+        return self.info
 
 
 class ReachEOF(Exception):
@@ -14,5 +17,8 @@ class ReachEOF(Exception):
 
 
 class BranchMatchException(Exception):
+    def __init__(self, info):
+        self.info = info
+
     def __str__(self):
-        return "BranchMatchException"
+        return self.info
