@@ -124,7 +124,7 @@ class Analyzer:
     def get_syntax_tree_str(self):
         """打印语法树"""
         output = "="*10 + "Syntax Tree" + "="*10 + "\n"
-        output = self._get_tree_recursion(self.tree_root, depth=0, indent_unit="-", out=output)
+        output = self._get_tree_recursion(self.tree_root, depth=0, indent_unit="--", out=output)
         return output
 
     def _get_tree_recursion(self, cur_node: TreeNode, depth, indent_unit, out):
