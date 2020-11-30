@@ -18,6 +18,7 @@ class Analyzer:
         self.syntax = syntax
         self.tokenizer = tokenizer
         self.tree_root = None
+        self.analyze_log = ""
         self._cur_word = None
 
         self._analyze(debug)
@@ -45,7 +46,7 @@ class Analyzer:
             self._analyze_recursion(self.tree_root, debug)
         except ReachEOF:
             if debug:
-                print("succeed!")
+                self.analyze_log += "succeed!\n"
 
     def _analyze_recursion(self, cur_node, debug):
         """
@@ -62,28 +63,28 @@ class Analyzer:
             # 若当前符号是非终结符，则开启一个子节点，指针移动到新节点
             if isinstance(token, NonTerminalToken):
                 if debug:
-                    print("-" * 20)
-                    print(f"current node: {token.token_content}")
+                    self.analyze_log += "-" * 20 + "\n"
+                    self.analyze_log += f"current node: {token.token_content}\n"
                 self._analyze_recursion(cur_node=cur_node.build_child(token), debug=debug)
 
             # 是终结符，则match它，并挂载到子节点
             elif isinstance(token, TerminalToken):
                 if token.match(self._cur_word):
                     if debug:
-                        print(f"Terminal token \"{token.token_content}\" matched.")
+                        self.analyze_log += f"Terminal token \"{token.token_content}\" matched.\n"
                     cur_node.build_child(self._cur_word)
                 else:
                     # 无法匹配时，报错并退出
                     if debug:
-                        print(f"Error in terminal-token matching! "
-                              f"expected: \"{token.token_content}\", got: \"{self._cur_word}\"")
+                        self.analyze_log += f"Error in terminal-token matching! " + \
+                                f"expected: \"{token.token_content}\", got: \"{self._cur_word}\"\n"
                     raise TerminalMatchException(
                         info=f"expected: \"{token.token_content}\", got: \"{self._cur_word}\"")
 
                 self._cur_word = self._get_token()  # 获取解析文档的下一个单词
                 if self._cur_word == "EOF":
                     if debug:
-                        print("reach 'EOF'!")
+                        self.analyze_log += "reach 'EOF'!\n"
                     raise ReachEOF
 
             # 是条件分支时，将当前读到的单词在LL-1中匹配，找出可执行的分支，挂载到子节点，节点指针移动
@@ -94,8 +95,8 @@ class Analyzer:
                     self._analyze_recursion(cur_node=cur_node.build_child(next_stmt), debug=debug)
                 except KeyError:
                     if debug:
-                        print(f"Error in branch finding! "
-                              f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\"")
+                        self.analyze_log += f"Error in branch finding! " + \
+                                f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\""
                     raise BranchMatchException(
                         info=f"cur_word: \"{self._cur_word}\"; cur stmt: \"{str(cur_node.data)}\""
                     )
