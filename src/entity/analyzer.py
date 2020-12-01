@@ -113,7 +113,7 @@ class Analyzer:
 
             # 是循环出现语句时
             elif isinstance(token, RepeatStmt):
-                # todo::需要求follow集合，follow元素出现时表示循环出现语句结束
+                # todo::需要求follow集合，follow元素出现时表示循环出现语句结束，目前follow是通过人工编写后导入
                 # 循环直到语句段末尾token的follow出现
                 while self._cur_word not in self.syntax.follow[" ".join([str(e) for e in token.tokens])]:
                     # 循环内按照顺序语句匹配
