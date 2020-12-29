@@ -17,12 +17,12 @@ class Syntax:
         self.first = {}  # first元素集合
         self.ll_1_table = {}  # LL1分析表
 
-        self.build_first()
-        self.build_ll_1_table()
+        self._build_first()
+        self._build_ll_1_table()
         self.follow = follow_set_load
         # self.follow = self.build_follow()  # follow元素集合
 
-    def build_first(self):
+    def _build_first(self):
         """构建first集合"""
         for token in self.non_terminal_set:
             self.first[token] = self.get_first_single_stmt(self.rule_set[token.token_content].post)
@@ -92,7 +92,7 @@ class Syntax:
         # todo::得到单个非终结符的follow集合
         return follow_elem_set
 
-    def build_ll_1_table(self):
+    def _build_ll_1_table(self):
         """建立LL1分析表"""
         for token in self.non_terminal_set:
             table_row = {}
@@ -132,3 +132,9 @@ class Syntax:
 
     def get_stmt_by_token(self, token: NonTerminalToken):
         return self.rule_set[token.token_content]
+
+    def _build_lr_0_table(self):
+        """建立LR(0)分析表
+        SLR(1)方法使用的是LR(0)的邻接表（分析表）"""
+        for token in self.non_terminal_set:
+            pass

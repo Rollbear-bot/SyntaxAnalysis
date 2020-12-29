@@ -7,6 +7,7 @@ import unittest
 
 from res.tiny_syntax import TINY_SYNTAX
 from entity.analyzer import Analyzer
+from entity.SLR_1 import SLR1Analyzer
 from entity.tokenizer import *
 
 
@@ -55,6 +56,22 @@ if (0<x)
         tokenizer = Tokenizer(doc)
         a = Analyzer(syntax=TINY_SYNTAX, tokenizer=tokenizer)
         print(a.get_syntax_tree_str())
+
+
+class TestSLR1(unittest.TestCase):
+    def test_analyze(self):
+        doc = """
+                  read x; 
+        if (0<x) 
+          _fact := 1;
+          while(x_er>0)
+            fact := fact * x;
+            x := x - 132;
+          endwhile;
+          write fact; 
+                  """
+        tokenizer = Tokenizer(doc)
+        analyzer = SLR1Analyzer(syntax=TINY_SYNTAX, tokenizer=tokenizer, debug=True)
 
 
 if __name__ == '__main__':
