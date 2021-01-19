@@ -54,8 +54,9 @@ class Syntax:
             for branch in stmt[0].branches:
                 first_elem_set.update(self.get_first_single_stmt(branch))
 
-        # todo::如果规则开头是正闭包{}
-        pass
+        # 如果规则开头是正闭包{}，求第一个元素的first即可
+        elif isinstance(stmt[0], RepeatStmt):
+            first_elem_set.update(self.get_first_single_token(stmt[0][0]))
 
         # todo::如果规则开头是可选语句[]
         pass
