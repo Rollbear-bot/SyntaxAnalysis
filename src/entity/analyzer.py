@@ -14,7 +14,7 @@ from entity.exception import *
 class Analyzer:
     """文法分析器"""
 
-    def __init__(self, syntax: Syntax, tokenizer: Tokenizer, debug=False):
+    def __init__(self, syntax: Syntax, tokenizer, debug=False):
         self.syntax = syntax
         self.tokenizer = tokenizer
         self.tree_root = None
